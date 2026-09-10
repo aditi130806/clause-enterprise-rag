@@ -41,8 +41,18 @@ DEFAULT_CANDIDATE_TOP_N = int(os.getenv("DEFAULT_CANDIDATE_TOP_N", "20"))
 DEFAULT_FINAL_TOP_K = int(os.getenv("DEFAULT_FINAL_TOP_K", "5"))
 
 # LLM & Generation Configuration
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+_st_gemini_key = ""
+_st_gemini_model = ""
+try:
+    import streamlit as _st
+    if hasattr(_st, "secrets"):
+        _st_gemini_key = _st.secrets.get("GEMINI_API_KEY", "")
+        _st_gemini_model = _st.secrets.get("GEMINI_MODEL", "")
+except Exception:
+    pass
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "") or _st_gemini_key
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "") or _st_gemini_model or "gemini-3.8-flash"
 DEFAULT_LLM_TEMPERATURE = float(os.getenv("DEFAULT_LLM_TEMPERATURE", "0.0"))
 
 # Evidence Sufficiency Gate Thresholds

@@ -19,10 +19,14 @@ from src.evidence_guard import EvidenceGuard
 
 @pytest.fixture(autouse=True)
 def clean_live_analytics_file():
-    """Ensure clean live analytics state before and after each test."""
+    """Ensure clean live analytics state during test while preserving existing file content."""
+    original_content = ""
+    if LIVE_USAGE_FILE.exists():
+        original_content = LIVE_USAGE_FILE.read_text(encoding="utf-8")
     clear_live_query_events()
     yield
-    clear_live_query_events()
+    LIVE_USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    LIVE_USAGE_FILE.write_text(original_content, encoding="utf-8")
 
 
 def test_ask_request_appends_live_analytics_event():

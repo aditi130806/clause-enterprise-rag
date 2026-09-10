@@ -263,7 +263,15 @@ python scripts/index_final_corpus.py
 
 ## R. Deployment
 
-For complete containerization and Google Cloud Run deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+### Primary Deployment: Streamlit Community Cloud (Recommended)
+Clause is optimized for one-click deployment on **Streamlit Community Cloud** directly from GitHub:
+- **Repository**: `aditi130806/clause-enterprise-rag`
+- **Branch**: `main`
+- **Main file path**: `app.py`
+- **Secrets Setup**: Set `GEMINI_API_KEY` and `GEMINI_MODEL` under **Advanced Settings -> Secrets** in Streamlit Community Cloud.
+
+### Alternative Deployment: Google Cloud Run (Optional)
+For enterprise container deployment on GCP, see the full guide in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ---
 

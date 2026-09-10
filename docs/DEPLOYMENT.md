@@ -1,119 +1,74 @@
-# Clause Enterprise RAG — Google Cloud Run Deployment Guide
+# Clause Enterprise RAG — Deployment Guide
 
-This guide details how to deploy **Clause Enterprise RAG** to **Google Cloud Run** using **Google Cloud Shell** directly in your browser.
-
-> [!NOTE]
-> **No local Docker Desktop or local `gcloud` CLI installation is required.** Deployment is executed entirely within Google Cloud Shell via `gcloud run deploy --source .`.
+This guide details how to deploy **Clause Enterprise RAG** to cloud hosting environments.
 
 ---
 
-## 1. Prerequisites
+## Primary Deployment Method: Streamlit Community Cloud (Recommended)
 
-1. Active **Google Cloud Platform (GCP)** account with billing enabled.
-2. Valid `GEMINI_API_KEY` from Google AI Studio.
+Deploy Clause directly from GitHub to **Streamlit Community Cloud** with zero cloud billing requirements.
+
+### Deployment Parameters
+- **GitHub Repository**: `aditi130806/clause-enterprise-rag`
+- **Branch**: `main`
+- **Main file path**: `app.py`
+
+### Step-by-Step Deployment Instructions
+
+1. **Sign in to Streamlit Community Cloud**:
+   Navigate to [share.streamlit.io](https://share.streamlit.io) and log in with your GitHub account.
+
+2. **Deploy New App**:
+   - Click **"New app"** -> **"Use existing repo"**.
+   - Select Repository: `aditi130806/clause-enterprise-rag`.
+   - Select Branch: `main`.
+   - Set Main file path: `app.py`.
+
+3. **Configure App Secrets & Environment Variables**:
+   Before clicking Deploy, click **"Advanced settings..."** -> **"Secrets"** and enter your credentials:
+   ```toml
+   GEMINI_API_KEY = "your-actual-gemini-api-key-here"
+   GEMINI_MODEL = "gemini-3.8-flash"
+   ```
+
+4. **Launch Application**:
+   Click **"Deploy!"**. Streamlit Community Cloud will automatically build the environment from `requirements.txt`, initialize the FAISS vectorstore and demo corpus, and launch your live application at a public URL (e.g. `https://clause-enterprise-rag.streamlit.app`).
+
+---
+
+## Alternative Deployment Method: Google Cloud Run (Optional Container Deployment)
+
+For enterprise container deployments with dedicated infrastructure on Google Cloud Platform:
+
+### Prerequisites
+1. Active GCP account with billing enabled.
+2. Valid `GEMINI_API_KEY` stored in Google Secret Manager.
 3. Access to [Google Cloud Shell](https://shell.cloud.google.com).
 
----
-
-## 2. Transferring Source Code to Google Cloud Shell
-
-Choose one of the following options to bring your code into Cloud Shell:
-
-### Option A — GitHub Clone (Recommended)
-1. Push your repository to GitHub.
-2. Open [Google Cloud Shell](https://shell.cloud.google.com).
-3. Clone and navigate to the project directory:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/clause-enterprise-rag.git
-   cd clause-enterprise-rag
-   ```
-
-### Option B — Upload ZIP File
-1. Zip your local project directory (ensure `.env` and `.venv` are excluded).
-2. Open [Google Cloud Shell](https://shell.cloud.google.com).
-3. Click **More (3 dots)** in the top right menu -> **Upload file** -> select your `.zip` file.
-4. Unzip and enter the project folder:
-   ```bash
-   unzip clause-enterprise-rag.zip
-   cd clause-enterprise-rag
-   ```
-
----
-
-## 3. Secret Manager Setup (Storing GEMINI_API_KEY)
-
-Never hardcode secrets into Docker images or environment variables. Store your API key securely in Google Secret Manager:
+### Quick Deployment via Google Cloud Shell
+No local Docker or `gcloud` installation required. In Google Cloud Shell:
 
 ```bash
-# 1. Set your active project ID
+# 1. Clone repository
+git clone https://github.com/aditi130806/clause-enterprise-rag.git
+cd clause-enterprise-rag
+
+# 2. Store Gemini key in Secret Manager
 gcloud config set project YOUR_PROJECT_ID
-
-# 2. Enable Secret Manager API
 gcloud services enable secretmanager.googleapis.com
+printf '%s' 'YOUR_REAL_GEMINI_API_KEY' | gcloud secrets create clause-gemini-key --data-file=-
 
-# 3. Create the secret container
-printf '%s' 'YOUR_ACTUAL_GEMINI_API_KEY' | gcloud secrets create clause-gemini-key --data-file=-
-
-# (Optional) Add a new version if the secret already exists:
-# printf '%s' 'YOUR_ACTUAL_GEMINI_API_KEY' | gcloud secrets versions add clause-gemini-key --data-file=-
-
-# 4. Grant Secret Accessor permission to the default Cloud Run service account
-PROJECT_NUMBER=$(gcloud projects describe YOUR_PROJECT_ID --format='value(projectNumber)')
-
-gcloud secrets add-iam-policy-binding clause-gemini-key \
-    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
-    --role="roles/secretmanager.secretAccessor"
-```
-
----
-
-## 4. Deploying to Google Cloud Run
-
-### Automated Script Deployment
-Edit `deploy_cloud_run.sh` to set `YOUR_PROJECT_ID` and `YOUR_REGION` (e.g., `us-central1`), then run:
-
-```bash
+# 3. Deploy to Cloud Run
 bash deploy_cloud_run.sh
 ```
 
-### Manual Command Execution
-Alternatively, run the single deployment command directly in Cloud Shell:
-
-```bash
-gcloud run deploy clause-enterprise-rag \
-    --source . \
-    --region us-central1 \
-    --platform managed \
-    --allow-unauthenticated \
-    --port 8080 \
-    --memory 2Gi \
-    --cpu 2 \
-    --concurrency 80 \
-    --timeout 300 \
-    --set-env-vars GEMINI_MODEL=gemini-3.8-flash,DEFAULT_LLM_TEMPERATURE=0.0 \
-    --set-secrets GEMINI_API_KEY=clause-gemini-key:latest
-```
-
 ---
 
-## 5. Recommended Resource Settings
+## Resource Requirements & Runtime Notes
 
-| Setting | Recommended Value | Rationale |
+| Environment | Recommended Memory | Key Feature |
 | :--- | :--- | :--- |
-| **Memory** | `2Gi` | FastEmbed ONNX embedding models and FAISS vector indices require ~1.2-1.5GiB RAM in-memory. |
-| **CPU** | `2` | Ensures fast query embedding generation and hybrid search execution. |
-| **Port** | `8080` | Streamlit container default HTTP port binding. |
-| **Concurrency** | `80` | Default concurrency limit for Streamlit web sessions. |
-| **Timeout** | `300s` | Accommodates initial cold-start model weights loading. |
+| **Streamlit Community Cloud** | Free Tier (~1-3GB) | Zero billing setup, direct GitHub integration, automatic SSL. |
+| **Google Cloud Run** | `2Gi` RAM, `2` vCPU | Dedicated container scaling, enterprise SLA, custom domains. |
 
----
-
-## 6. Accessing the Live Application
-
-Upon completion, Cloud Run will output the HTTPS service URL:
-```text
-Service [clause-enterprise-rag] revision [clause-enterprise-rag-00001-xyz] has been deployed and is serving 100% of traffic.
-Service URL: https://clause-enterprise-rag-xyz-uc.a.run.app
-```
-
-Open the generated `Service URL` in your web browser to access your live Clause Enterprise RAG instance!
+Both environments automatically bundle the 6-document demo policy corpus and initialize FAISS vector search in-memory.

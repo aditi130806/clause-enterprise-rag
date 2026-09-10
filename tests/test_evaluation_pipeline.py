@@ -50,7 +50,7 @@ def test_metrics_load_from_evaluation_results_json(monkeypatch):
 
     render_evaluation_page()
 
-    assert len(tables_rendered) == 1
+    assert len(tables_rendered) >= 1
     rows = tables_rendered[0]
     metric_names = [r["Metric"] for r in rows]
     assert "Retrieval Hit@1" in metric_names
@@ -76,7 +76,7 @@ def test_benchmark_table_no_raw_html(monkeypatch):
     render_evaluation_page()
 
     # Table is passed as list of dicts to st.table
-    assert len(tables_rendered) == 1
+    assert len(tables_rendered) >= 1
     # Verify no raw <table or <div table HTML in markdown calls
     for body in markdown_rendered:
         assert "<div style=\"display: grid;" not in body

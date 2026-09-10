@@ -1,15 +1,24 @@
 """
 Backward-compatible wrapper for evaluation page tests.
-Refers to test_evaluation_pipeline.py.
 """
 
-from tests.test_evaluation_pipeline import (
-    test_metrics_load_from_evaluation_results_json as test_evaluation_page_auto_loads_json,
-    test_manual_run_evaluation_preserved as test_run_evaluation_button_executes_pipeline,
-)
 import streamlit as st
 from unittest.mock import MagicMock
 from src.ui.pages.evaluation import render_evaluation_page
+from tests.test_evaluation_pipeline import (
+    test_metrics_load_from_evaluation_results_json,
+    test_manual_run_evaluation_preserved,
+)
+
+
+def test_evaluation_page_auto_loads_json(monkeypatch):
+    """Wrapper verifying evaluation results auto load."""
+    test_metrics_load_from_evaluation_results_json(monkeypatch)
+
+
+def test_run_evaluation_button_executes_pipeline(monkeypatch):
+    """Wrapper verifying manual evaluation execution."""
+    test_manual_run_evaluation_preserved(monkeypatch)
 
 
 def test_evaluation_page_empty_state(monkeypatch, tmp_path):
