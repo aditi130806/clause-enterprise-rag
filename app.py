@@ -28,31 +28,65 @@ def main():
     # Inject unified CSS design system
     inject_custom_css()
 
+    # Track session state for page navigation scroll reset
+    if "previous_page" not in st.session_state:
+        st.session_state["previous_page"] = None
+
     # Render left navigation sidebar shell with unified KB status & mobile header
     current_page = render_sidebar()
+    previous_page = st.session_state.get("previous_page")
 
-    # Track page changes for scroll-to-top trigger
-    previous_page = st.session_state.get("previous_page", None)
-
-    if previous_page != current_page:
-        st.session_state["previous_page"] = current_page
+    # One-time scroll reset against parent Streamlit document ONLY when page changes
+    if previous_page is not None and previous_page != current_page:
         st.components.v1.html(
             """
             <script>
-            try {
-                const parentDoc = window.parent.document;
-                const mainSection = parentDoc.querySelector('section.main') || 
-                                    parentDoc.querySelector('div[data-testid="stMain"]') ||
-                                    parentDoc.querySelector('div[data-testid="stAppViewContainer"]');
-                if (mainSection && mainSection.scrollTo) {
-                    mainSection.scrollTo({top: 0, left: 0, behavior: 'auto'});
+            (function() {
+                function forceScrollTop() {
+                    try {
+                        var doc = window.parent.document;
+                        if (!doc) return;
+                        var selectors = [
+                            '[data-testid="stAppViewContainer"]',
+                            'section.main',
+                            '[data-testid="stMain"]',
+                            '.main',
+                            '#root'
+                        ];
+                        selectors.forEach(function(sel) {
+                            var el = doc.querySelector(sel);
+                            if (el) {
+                                el.scrollTop = 0;
+                                if (el.scrollTo) {
+                                    try { el.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+                                    catch(e) { el.scrollTo(0, 0); }
+                                }
+                            }
+                        });
+                        if (doc.scrollingElement) doc.scrollingElement.scrollTop = 0;
+                        if (doc.documentElement) doc.documentElement.scrollTop = 0;
+                        if (doc.body) doc.body.scrollTop = 0;
+                        if (window.parent && window.parent.scrollTo) {
+                            try { window.parent.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+                            catch(e) { window.parent.scrollTo(0, 0); }
+                        }
+                    } catch(err) {}
                 }
-                window.parent.scrollTo({top: 0, left: 0, behavior: 'auto'});
-            } catch(e) {}
+                forceScrollTop();
+                if (window.parent && window.parent.requestAnimationFrame) {
+                    window.parent.requestAnimationFrame(forceScrollTop);
+                }
+                setTimeout(forceScrollTop, 10);
+                setTimeout(forceScrollTop, 50);
+                setTimeout(forceScrollTop, 150);
+            })();
             </script>
             """,
             height=0,
         )
+
+    # Always update previous_page after checking
+    st.session_state["previous_page"] = current_page
 
     # Route to active page module
     if current_page == "Ask":

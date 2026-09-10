@@ -366,20 +366,38 @@ def inject_custom_css():
         text-align: center;
     }
 
-    /* Mobile Header & Responsiveness (max-width: 768px) */
+    /* Mobile Header & Responsiveness (max-width: 768px vs min-width: 769px) */
     .mobile-header-bar {
         display: none;
+    }
+
+    @media (min-width: 769px) {
+        .mobile-header-bar,
+        .mobile-logo-wrap,
+        .mobile-menu-card,
+        div[data-testid="stColumn"]:has(button[key="mob_menu_toggle_btn"]),
+        div[data-testid="element-container"]:has(.mobile-header-bar),
+        div[data-testid="element-container"]:has(.mobile-menu-card),
+        div[data-testid="element-container"]:has(.mobile-logo-wrap) {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
     }
 
     @media (max-width: 768px) {
         .mobile-header-bar {
             display: block !important;
+            visibility: visible !important;
             width: 100% !important;
             margin-bottom: 16px !important;
         }
 
         .mobile-logo-wrap {
             display: flex !important;
+            visibility: visible !important;
             align-items: center !important;
             height: 44px !important;
         }
@@ -390,6 +408,8 @@ def inject_custom_css():
         }
 
         .mobile-menu-card {
+            display: block !important;
+            visibility: visible !important;
             background-color: var(--bg-surface) !important;
             border: 1px solid var(--border-color) !important;
             border-radius: 8px !important;
