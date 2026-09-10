@@ -1,0 +1,538 @@
+{
+  "knowledge_base_fingerprint": "74541e3b801864cb",
+  "evaluated_at": "2026-09-10T11:20:59.671541",
+  "document_count": 6,
+  "chunk_count": 16,
+  "total_questions": 24,
+  "supported_questions": 18,
+  "unsupported_questions": 6,
+  "retrieval_hit_at_1": 0.9444444444444444,
+  "retrieval_hit_at_3": 1.0,
+  "mrr": 0.9629629629629629,
+  "expected_source_accuracy": 1.0,
+  "correct_refusal_rate": 1.0,
+  "grounding_validation_rate": 1.0,
+  "llm_eval_samples_run": 0,
+  "details": [
+    {
+      "question_id": "Q01",
+      "category": "single_doc_semantic",
+      "question": "Can an employee work from home while on probation?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Remote Work Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q02",
+      "category": "single_doc_semantic",
+      "question": "What is the maximum number of PTO days that can be carried over into the next year?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Annual Leave & PTO Policy.docx",
+        "Annual Leave & PTO Policy.docx",
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q03",
+      "category": "single_doc_semantic",
+      "question": "What itemized receipts are required for business expense reimbursement?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Expense Reimbursement Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Expense Reimbursement Policy.docx",
+        "Expense Reimbursement Policy.docx",
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q04",
+      "category": "single_doc_semantic",
+      "question": "What length and complexity is required for employee account passwords?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Information Security Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Information Security Policy.docx",
+        "Remote Work Policy.docx",
+        "Information Security Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": true,
+      "correct_refusal": null,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q05",
+      "category": "single_doc_semantic",
+      "question": "What are the mandatory core collaboration hours when employees must be reachable?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Attendance & Flexible Work Hours Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Attendance & Flexible Work Hours Policy.docx",
+        "Remote Work Policy.docx",
+        "Attendance & Flexible Work Hours Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q06",
+      "category": "single_doc_semantic",
+      "question": "What percentage of monthly health insurance premiums does the company pay?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Employee Benefits & Wellness Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Employee Benefits & Wellness Policy.docx",
+        "Employee Benefits & Wellness Policy.docx",
+        "Expense Reimbursement Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q07",
+      "category": "single_doc_semantic",
+      "question": "What internet speed is required for telecommuting employees?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Remote Work Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Information Security Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q08",
+      "category": "single_doc_semantic",
+      "question": "How many paid sick days do full-time employees receive annually?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Annual Leave & PTO Policy.docx",
+        "Annual Leave & PTO Policy.docx",
+        "Employee Benefits & Wellness Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q09",
+      "category": "single_doc_semantic",
+      "question": "Within how many days must an expense reimbursement claim be submitted?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Expense Reimbursement Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Expense Reimbursement Policy.docx",
+        "Annual Leave & PTO Policy.docx",
+        "Information Security Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q10",
+      "category": "single_doc_semantic",
+      "question": "What is the dollar limit for the annual employee wellness stipend?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Employee Benefits & Wellness Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Employee Benefits & Wellness Policy.docx",
+        "Expense Reimbursement Policy.docx",
+        "Expense Reimbursement Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q11",
+      "category": "exact_identifier",
+      "question": "What does policy HR-RW-017 state about remote work?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Remote Work Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q12",
+      "category": "exact_identifier",
+      "question": "What are the MFA authentication rules in SEC-IS-002?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Information Security Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Information Security Policy.docx",
+        "Information Security Policy.docx",
+        "Remote Work Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q13",
+      "category": "exact_identifier",
+      "question": "What are the non-reimbursable expense rules under FIN-EXP-011?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Expense Reimbursement Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Expense Reimbursement Policy.docx",
+        "Expense Reimbursement Policy.docx",
+        "Expense Reimbursement Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q14",
+      "category": "exact_identifier",
+      "question": "What is the scope of policy HR-LV-004?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Annual Leave & PTO Policy.docx",
+        "Remote Work Policy.docx",
+        "Employee Benefits & Wellness Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "High",
+      "evidence_status": "sufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q15",
+      "category": "multi_document",
+      "question": "What security measures and approval steps are required when working remotely?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Remote Work Policy.docx",
+        "Information Security Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": true,
+      "correct_refusal": null,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q16",
+      "category": "multi_document",
+      "question": "What advance notice is required for taking annual leave versus booking business travel?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Annual Leave & PTO Policy.docx",
+        "Expense Reimbursement Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Expense Reimbursement Policy.docx",
+        "Expense Reimbursement Policy.docx",
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": true,
+      "correct_refusal": null,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q17",
+      "category": "multi_document",
+      "question": "How do flexible working hours interact with MFA security during remote work?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Attendance & Flexible Work Hours Policy.docx",
+        "Information Security Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Attendance & Flexible Work Hours Policy.docx"
+      ],
+      "hit_at_1": false,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.3333333333333333,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q18",
+      "category": "multi_document",
+      "question": "What benefits and remote work equipment options are available for new employees?",
+      "expected_supported": true,
+      "expected_docs": [
+        "Remote Work Policy.docx",
+        "Employee Benefits & Wellness Policy.docx"
+      ],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Attendance & Flexible Work Hours Policy.docx",
+        "Remote Work Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0,
+      "refused": false,
+      "correct_refusal": null,
+      "confidence_label": "Moderate",
+      "evidence_status": "moderate",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q19",
+      "category": "unsupported",
+      "question": "Does the company provide employees with free company cars?",
+      "expected_supported": false,
+      "expected_docs": [],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.0,
+      "refused": true,
+      "correct_refusal": true,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q20",
+      "category": "unsupported",
+      "question": "What is the corporate pet policy for bring-your-dog to work days?",
+      "expected_supported": false,
+      "expected_docs": [],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Remote Work Policy.docx",
+        "Attendance & Flexible Work Hours Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.0,
+      "refused": true,
+      "correct_refusal": true,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q21",
+      "category": "unsupported",
+      "question": "What is the company policy for tuition reimbursement for university master's degrees?",
+      "expected_supported": false,
+      "expected_docs": [],
+      "top_retrieved_docs": [
+        "Expense Reimbursement Policy.docx",
+        "Expense Reimbursement Policy.docx",
+        "Employee Benefits & Wellness Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.0,
+      "refused": true,
+      "correct_refusal": true,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q22",
+      "category": "unsupported",
+      "question": "Does the company reimburse employee stock option trading losses?",
+      "expected_supported": false,
+      "expected_docs": [],
+      "top_retrieved_docs": [
+        "Expense Reimbursement Policy.docx",
+        "Employee Benefits & Wellness Policy.docx",
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.0,
+      "refused": true,
+      "correct_refusal": true,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q23",
+      "category": "unsupported",
+      "question": "What are the company guidelines for sabbatical leaves exceeding 2 years?",
+      "expected_supported": false,
+      "expected_docs": [],
+      "top_retrieved_docs": [
+        "Annual Leave & PTO Policy.docx",
+        "Expense Reimbursement Policy.docx",
+        "Annual Leave & PTO Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.0,
+      "refused": true,
+      "correct_refusal": true,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    },
+    {
+      "question_id": "Q24",
+      "category": "unsupported",
+      "question": "What is the company policy regarding enterprise relocation bonuses to Tokyo?",
+      "expected_supported": false,
+      "expected_docs": [],
+      "top_retrieved_docs": [
+        "Remote Work Policy.docx",
+        "Annual Leave & PTO Policy.docx",
+        "Expense Reimbursement Policy.docx"
+      ],
+      "hit_at_1": true,
+      "hit_at_3": true,
+      "reciprocal_rank": 0.0,
+      "refused": true,
+      "correct_refusal": true,
+      "confidence_label": "Insufficient",
+      "evidence_status": "insufficient",
+      "used_llm": false
+    }
+  ]
+}

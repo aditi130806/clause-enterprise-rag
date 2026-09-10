@@ -1,0 +1,25 @@
+question_id,category,question,expected_supported,hit_at_1,hit_at_3,reciprocal_rank,refused,correct_refusal,confidence_label
+Q01,single_doc_semantic,Can an employee work from home while on probation?,True,True,True,1.00,False,,Moderate
+Q02,single_doc_semantic,What is the maximum number of PTO days that can be carried over into the next year?,True,True,True,1.00,False,,Moderate
+Q03,single_doc_semantic,What itemized receipts are required for business expense reimbursement?,True,True,True,1.00,False,,High
+Q04,single_doc_semantic,What length and complexity is required for employee account passwords?,True,True,True,1.00,True,,Insufficient
+Q05,single_doc_semantic,What are the mandatory core collaboration hours when employees must be reachable?,True,True,True,1.00,False,,Moderate
+Q06,single_doc_semantic,What percentage of monthly health insurance premiums does the company pay?,True,True,True,1.00,False,,Moderate
+Q07,single_doc_semantic,What internet speed is required for telecommuting employees?,True,True,True,1.00,False,,Moderate
+Q08,single_doc_semantic,How many paid sick days do full-time employees receive annually?,True,True,True,1.00,False,,Moderate
+Q09,single_doc_semantic,Within how many days must an expense reimbursement claim be submitted?,True,True,True,1.00,False,,High
+Q10,single_doc_semantic,What is the dollar limit for the annual employee wellness stipend?,True,True,True,1.00,False,,High
+Q11,exact_identifier,What does policy HR-RW-017 state about remote work?,True,True,True,1.00,False,,High
+Q12,exact_identifier,What are the MFA authentication rules in SEC-IS-002?,True,True,True,1.00,False,,High
+Q13,exact_identifier,What are the non-reimbursable expense rules under FIN-EXP-011?,True,True,True,1.00,False,,High
+Q14,exact_identifier,What is the scope of policy HR-LV-004?,True,True,True,1.00,False,,High
+Q15,multi_document,What security measures and approval steps are required when working remotely?,True,True,True,1.00,True,,Insufficient
+Q16,multi_document,What advance notice is required for taking annual leave versus booking business travel?,True,True,True,1.00,True,,Insufficient
+Q17,multi_document,How do flexible working hours interact with MFA security during remote work?,True,False,True,0.33,False,,Moderate
+Q18,multi_document,What benefits and remote work equipment options are available for new employees?,True,True,True,1.00,False,,Moderate
+Q19,unsupported,Does the company provide employees with free company cars?,False,True,True,0.00,True,True,Insufficient
+Q20,unsupported,What is the corporate pet policy for bring-your-dog to work days?,False,True,True,0.00,True,True,Insufficient
+Q21,unsupported,What is the company policy for tuition reimbursement for university master's degrees?,False,True,True,0.00,True,True,Insufficient
+Q22,unsupported,Does the company reimburse employee stock option trading losses?,False,True,True,0.00,True,True,Insufficient
+Q23,unsupported,What are the company guidelines for sabbatical leaves exceeding 2 years?,False,True,True,0.00,True,True,Insufficient
+Q24,unsupported,What is the company policy regarding enterprise relocation bonuses to Tokyo?,False,True,True,0.00,True,True,Insufficient
