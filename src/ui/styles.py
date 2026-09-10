@@ -276,12 +276,13 @@ def inject_custom_css():
         background-color: var(--bg-surface) !important;
         color: var(--text-primary) !important;
         border: 1px solid var(--border-color) !important;
-        border-radius: 12px !important;
-        font-size: 12.5px !important;
+        border-radius: 8px !important;
+        font-size: 13px !important;
         padding: 8px 12px !important;
         height: auto !important;
-        min-height: 54px !important;
-        font-weight: 400 !important;
+        min-height: 38px !important;
+        font-weight: 500 !important;
+        box-shadow: none !important;
     }
 
     .chip-btn button *,
@@ -303,16 +304,28 @@ def inject_custom_css():
         border-color: var(--color-forest) !important;
     }
 
+    .chip-toggle-btn button {
+        background-color: transparent !important;
+        color: var(--color-forest) !important;
+        border: 1px solid #D0E3D7 !important;
+        font-weight: 600 !important;
+    }
+
+    .chip-toggle-btn button:hover {
+        background-color: var(--color-active-tint) !important;
+        border-color: var(--color-forest) !important;
+    }
+
     /* Table System */
-    .clause-table {
-        width: 100%;
+    .clause-table, div[data-testid="stTable"] {
+        width: 100% !important;
         border-collapse: collapse;
         margin: 12px 0;
         font-size: 14px;
         background-color: var(--bg-surface);
         border: 1px solid var(--border-color);
         border-radius: 8px;
-        overflow: hidden;
+        overflow-x: auto !important;
     }
 
     .clause-table th {
@@ -351,6 +364,57 @@ def inject_custom_css():
         font-size: 12px;
         color: var(--text-secondary);
         text-align: center;
+    }
+
+    /* Mobile Header & Responsiveness (max-width: 768px) */
+    .mobile-header-bar {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .mobile-header-bar {
+            display: block !important;
+            width: 100% !important;
+            margin-bottom: 16px !important;
+        }
+
+        .mobile-logo-wrap {
+            display: flex !important;
+            align-items: center !important;
+            height: 44px !important;
+        }
+
+        .mobile-logo-wrap svg {
+            max-width: 130px !important;
+            height: 36px !important;
+        }
+
+        .mobile-menu-card {
+            background-color: var(--bg-surface) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            padding: 12px !important;
+            margin-top: 8px !important;
+            margin-bottom: 16px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .block-container {
+            padding-top: 16px !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+            padding-bottom: 32px !important;
+        }
+
+        div[data-testid="column"] {
+            width: 100% !important;
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+        }
+
+        .chip-btn button {
+            width: 100% !important;
+        }
     }
     </style>
     """

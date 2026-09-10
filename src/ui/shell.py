@@ -43,13 +43,16 @@ from typing import Optional
 
 def render_sidebar(doc_count: Optional[int] = None, chunk_count: Optional[int] = None) -> str:
     """
-    Render cohesive left sidebar with active knowledge base status.
+    Render cohesive left sidebar with active knowledge base status for desktop,
+    and compact top navigation header for mobile.
 
     Returns:
         Selected page name ('Ask', 'Documents', 'Evaluation', 'System').
     """
     if "current_page" not in st.session_state:
         st.session_state["current_page"] = "Ask"
+    if "mobile_menu_open" not in st.session_state:
+        st.session_state["mobile_menu_open"] = False
 
     from src.kb_state import get_knowledge_base_status
     kb_status = get_knowledge_base_status()
@@ -67,6 +70,7 @@ def render_sidebar(doc_count: Optional[int] = None, chunk_count: Optional[int] =
         dot_html = '<span style="color: #949692; font-size: 10px;">○</span>'
         status_label = "No documents uploaded"
 
+    # 1. Desktop Left Sidebar (>= 769px)
     with st.sidebar:
         # Top Logo Only (No giant banners, no duplicate icons)
         logo_svg = load_logo_svg().replace("\n", "").strip()
@@ -98,6 +102,32 @@ def render_sidebar(doc_count: Optional[int] = None, chunk_count: Optional[int] =
             f'<div style="padding-top: 0.85rem; border-top: 1px solid #E3E3DE; font-size: 13px; color: #6E716D;"><div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px; font-weight: 600; color: #1C1E1C;">{dot_html} {status_label}</div><div style="padding-left: 12px; color: #6E716D; font-size: 12px;">{final_doc_count} documents · {final_chunk_count:,} chunks</div></div>',
             unsafe_allow_html=True,
         )
+
+    # 2. Mobile Top Navigation Bar (<= 768px)
+    st.markdown('<div class="mobile-header-bar">', unsafe_allow_html=True)
+    m_col1, m_col2 = st.columns([4, 1])
+    with m_col1:
+        logo_svg = load_logo_svg().replace("\n", "").strip()
+        st.markdown(f'<div class="mobile-logo-wrap">{logo_svg}</div>', unsafe_allow_html=True)
+    with m_col2:
+        btn_label = "✕ Menu" if st.session_state["mobile_menu_open"] else "☰ Menu"
+        if st.button(btn_label, key="mob_menu_toggle_btn", use_container_width=True):
+            st.session_state["mobile_menu_open"] = not st.session_state["mobile_menu_open"]
+            st.rerun()
+
+    if st.session_state["mobile_menu_open"]:
+        st.markdown('<div class="mobile-menu-card">', unsafe_allow_html=True)
+        nav_items = ["Ask", "Documents", "Evaluation", "System"]
+        for page_key in nav_items:
+            is_active = st.session_state["current_page"] == page_key
+            btn_type = "primary" if is_active else "secondary"
+            if st.button(page_key, key=f"mob_nav_{page_key}", type=btn_type, use_container_width=True):
+                st.session_state["current_page"] = page_key
+                st.session_state["mobile_menu_open"] = False
+                st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
     return st.session_state["current_page"]
 

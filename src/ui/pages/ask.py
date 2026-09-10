@@ -103,22 +103,39 @@ def render_ask_page():
         disabled=is_pending,
     )
 
-    # Sample Question Chips
-    st.markdown("<div style='font-size: 12px; color: #6E716D; margin-top: 4px; margin-bottom: 6px;'>Suggested queries:</div>", unsafe_allow_html=True)
-    chip_cols = st.columns(3)
+    # Sample Question Chips (Reduced clutter: 2 by default + More toggle)
+    if "show_more_suggestions" not in st.session_state:
+        st.session_state["show_more_suggestions"] = False
+
+    st.markdown("<div style='font-size: 13px; color: #6E716D; font-weight: 500; margin-top: 8px; margin-bottom: 6px;'>Suggested questions</div>", unsafe_allow_html=True)
+    
     sample_queries = [
         "What percentage of healthcare insurance premiums does the company cover for employees and dependents?",
         "What receipts are required for expenses over $25, and when must I submit the claim?",
         "Can employees work from home during probation, and what conditions apply?",
     ]
 
+    show_more = st.session_state["show_more_suggestions"]
+    visible_queries = sample_queries if show_more else sample_queries[:2]
+
     selected_chip = None
-    for idx, sq in enumerate(sample_queries):
+    col_weights = [1] * len(visible_queries) + [0.35]
+    chip_cols = st.columns(col_weights)
+
+    for idx, sq in enumerate(visible_queries):
         with chip_cols[idx]:
             st.markdown("<div class='chip-btn'>", unsafe_allow_html=True)
             if st.button(sq, key=f"chip_query_{idx}", use_container_width=True, disabled=is_pending):
                 selected_chip = sq
             st.markdown("</div>", unsafe_allow_html=True)
+
+    with chip_cols[-1]:
+        toggle_label = "Less" if show_more else "More"
+        st.markdown("<div class='chip-btn chip-toggle-btn'>", unsafe_allow_html=True)
+        if st.button(toggle_label, key="toggle_more_suggestions", use_container_width=True, disabled=is_pending):
+            st.session_state["show_more_suggestions"] = not show_more
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
     submitted_query = selected_chip or query_input
 
