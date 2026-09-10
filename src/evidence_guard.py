@@ -77,9 +77,9 @@ class EvidenceGuard:
 
     def __init__(
         self,
-        min_sufficiency_score: float = 0.08,
-        high_confidence_score: float = 0.30,
-        moderate_confidence_score: float = 0.15,
+        min_sufficiency_score: float = 0.015,
+        high_confidence_score: float = 0.15,
+        moderate_confidence_score: float = 0.06,
     ):
         self.min_sufficiency_score = min_sufficiency_score
         self.high_confidence_score = high_confidence_score

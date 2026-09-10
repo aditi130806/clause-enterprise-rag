@@ -32,7 +32,7 @@ class GeminiLLMService:
         api_key: Optional[str] = None,
         model_name: Optional[str] = None,
         temperature: float = DEFAULT_LLM_TEMPERATURE,
-        request_timeout: float = 60.0,
+        request_timeout: float = 10.0,
     ):
         if api_key is not None:
             self.api_key = api_key
@@ -66,55 +66,41 @@ class GeminiLLMService:
     def generate(self, prompt: str, temperature: Optional[float] = None) -> str:
         """
         Generate response text for a given prompt string using Gemini Interactions API (client.interactions.create).
-
-        Args:
-            prompt: Formatted grounded prompt string.
-            temperature: Optional generation temperature override.
-
-        Returns:
-            Generated response string.
+        Enforces 1 attempt with bounded timeout (default 10s) and immediate fallback trigger on error/quota/timeout.
         """
         if not prompt or not prompt.strip():
             raise LLMError("Cannot generate response for an empty prompt.")
 
         client = self._get_client()
-        max_attempts = 2
-        last_error = None
 
-        for attempt in range(1, max_attempts + 1):
-            try:
-                interaction = client.interactions.create(
-                    model=self.model_name,
-                    input=prompt,
-                )
+        import concurrent.futures
 
-                output_text = getattr(interaction, "output_text", None)
-                if not output_text and hasattr(interaction, "text"):
-                    output_text = interaction.text
+        def _call_api():
+            return client.interactions.create(
+                model=self.model_name,
+                input=prompt,
+                timeout=self.request_timeout,
+            )
 
-                if not output_text:
-                    output_text = str(interaction)
+        try:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(_call_api)
+                interaction = future.result(timeout=self.request_timeout)
 
-                if not output_text or not output_text.strip():
-                    raise LLMError("Gemini Interactions API returned an empty response.")
+            output_text = getattr(interaction, "output_text", None)
+            if not output_text and hasattr(interaction, "text"):
+                output_text = interaction.text
 
-                return output_text.strip()
+            if not output_text:
+                output_text = str(interaction)
 
-            except Exception as err:
-                last_error = err
-                err_str = str(err)
-                is_rate_limit = "429" in err_str or "quota" in err_str.lower() or "too_many_requests" in err_str.lower()
+            if not output_text or not output_text.strip():
+                raise LLMError("Gemini Interactions API returned an empty response.")
 
-                if attempt < max_attempts:
-                    if is_rate_limit:
-                        match = re.search(r"retry in (\d+(\.\d+)?)s", err_str, re.IGNORECASE)
-                        wait_seconds = float(match.group(1)) + 0.5 if match else 2.0
-                        time.sleep(min(wait_seconds, 3.0))
-                    else:
-                        time.sleep(1.0)
-                else:
-                    raise LLMError(
-                        f"Gemini LLM generation error (Model: '{self.model_name}', Attempt {attempt}/{max_attempts}): {err}"
-                    ) from err
+            return output_text.strip()
 
-        raise LLMError(f"Gemini LLM generation failed after {max_attempts} attempts: {last_error}")
+        except concurrent.futures.TimeoutError:
+            raise LLMError(f"Gemini API request timed out after {self.request_timeout} seconds.")
+        except Exception as err:
+            err_str = str(err)
+            raise LLMError(f"Gemini LLM generation error (Model: '{self.model_name}'): {err_str}") from err

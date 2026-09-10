@@ -17,20 +17,16 @@ def calculate_query_coverage(query: str, text: str) -> float:
         return 0.0
     
     stop_words = {
-        "a", "an", "the", "in", "on", "at", "for", "to", "of", "and", "is", "are", "what", "does", "can", "do",
-        "how", "why", "who", "where", "which", "company", "policy", "policies", "employee", "employees",
-        "corporate", "guidelines", "rules", "rule", "work", "working", "day", "days", "time", "hours",
-        "item", "items", "use", "used", "bring", "your", "year", "years", "month", "months", "plan", "plans",
-        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-        "leave", "leaves", "provided", "provides", "provide", "required", "requires", "requirement",
-        "requirements", "general", "specific"
+        "a", "an", "the", "in", "on", "at", "for", "to", "of", "and", "is", "are", "was", "were",
+        "be", "been", "do", "does", "did", "can", "will", "what", "how", "why", "who", "where",
+        "which", "with", "by", "from", "as", "or", "if", "that", "this", "it", "its", "your", "my", "our"
     }
     q_tokens = [w.lower() for w in re.findall(r"\b\w+\b", query) if w.lower() not in stop_words]
     if not q_tokens:
         return 0.0
     
     text_words = set(re.findall(r"\b\w+\b", text.lower()))
-    matches = sum(1 for token in q_tokens if token in text_words)
+    matches = sum(1 for token in q_tokens if any(token in tw or tw in token for tw in text_words))
     return matches / len(q_tokens)
 
 
@@ -56,11 +52,11 @@ def rerank_retrieval_results(
     policy_ids = extract_policy_identifiers(query)
     q_lower = query.lower()
 
-    # Detect value-seeking queries (allowance, limit, rate, amount, per diem, cost, etc.)
+    # Detect value-seeking queries (allowance, limit, rate, amount, per diem, cost, receipts, deadlines, etc.)
     is_value_seeking = any(term in q_lower for term in [
         "allowance", "limit", "rate", "amount", "how much", "percentage",
         "cost", "deadline", "how long", "per day", "per month", "stipend",
-        "fee", "price", "reimbursement", "per diem", "meal", "meals"
+        "fee", "price", "reimbursement", "per diem", "meal", "meals", "receipt", "receipts", "submit", "claim", "over $"
     ])
 
     scored_candidates = []
@@ -88,7 +84,7 @@ def rerank_retrieval_results(
         # 5. Value-seeking concrete numerical value boost
         value_boost = 0.0
         if is_value_seeking:
-            # Check for currency ($), percentage (%), per-diem/daily indicators, or concrete numbers ($75)
+            # Check for currency ($), percentage (%), per-diem/daily indicators, or concrete numbers ($25, $75, 30 days)
             if re.search(r"\$\d+|\b\d+\s*%\b|\b\d+\s*(?:days?|hours?|calendar days?|per day|daily)\b", chunk_text, re.IGNORECASE):
                 value_boost += 0.20
             if any(k in q_lower for k in ["meal", "meals", "food", "dining", "per diem"]) and any(k in chunk_text.lower() for k in ["meal", "meals", "per diem", "75"]):

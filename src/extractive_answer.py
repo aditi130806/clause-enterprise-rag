@@ -32,6 +32,7 @@ UNRELATED_TOPIC_PATTERNS = [
     (r"healthcare|insurance|premium|dependents", [r"telecommut", r"remote work", r"working from home", r"wfh", r"travel expense"]),
     (r"absence|tardiness|attendance", [r"expense reimbursement", r"travel expense", r"flexible working hours", r"meal per diem"]),
     (r"meal|meals|per diem|food|dining|allowance", [r"attendance", r"flexible scheduling", r"tardiness", r"wfh", r"telecommut", r"working hours"]),
+    (r"receipt|receipts|expense|expenses|reimbursement", [r"leave request", r"pto", r"vacation", r"holiday", r"sick day", r"attendance", r"probation"]),
 ]
 
 TITLE_ONLY_PATTERN = r"^(?:#{1,4}\s*|\d+\.\s*|Section\s+\d+:?\s*|\*\*\s*)*[A-Za-z0-9\s&,()/:-]{2,80}\.?$"
